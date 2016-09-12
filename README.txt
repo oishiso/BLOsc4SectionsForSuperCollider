@@ -1,3 +1,5 @@
+The mechanism of this UGen is explained in “Additive synthesis with band-limited oscillator sections”, Peter Pabon & So Oishi, ICMC 2016.
+
 How to install
 -------
 If SuperCollider is open and the localhost is in use, quit the server.
@@ -19,7 +21,7 @@ The C++ code for the plugin and CMakeLists.txt file are included. You can use th
 
 License
 -------
-Copyright (c) 2016 So Oishi. All rights reserved.
+Copyright (c) 2016 So Oishi and Peter Pabon. All rights reserved.
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
 
 
