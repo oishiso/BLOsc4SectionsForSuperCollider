@@ -56,6 +56,10 @@ spreadCompensation = 1,
 mul = 1.0,
 add = 0.0
 
+Activate a section by giving non-zero value to both Lowest or Highest Harmonic Index.
+Deactivate a section by giving “0” to either Lowest or Highest Harmonic Index.
+
+
 The best way to know these arguments is to try demo code (especially the part called “Demonstration with Gui”).
 
 
