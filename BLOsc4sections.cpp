@@ -87,6 +87,30 @@ void BLOsc4sections_Ctor(BLOsc4sections* unit)
   unit->partialOmega = twopi_f / SAMPLERATE;
   unit->phaseCurrent = 0.0f;
 
+  unit->loHarmonicsIntCurrent1 = 0.0f;
+  unit->loHarmonicsFracCurrent1 = 0.0f;
+  unit->hiHarmonicsIntCurrent1 = 0.0f;
+  unit->hiHarmonicsFracCurrent1 = 0.0f;
+  unit->spreadCurrent1 = 0.0f;
+  
+  unit->loHarmonicsIntCurrent2 = 0.0f;
+  unit->loHarmonicsFracCurrent2 = 0.0f;
+  unit->hiHarmonicsIntCurrent2 = 0.0f;
+  unit->hiHarmonicsFracCurrent2 = 0.0f;
+  unit->spreadCurrent2 = 0.0f;
+
+  unit->loHarmonicsIntCurrent3 = 0.0f;
+  unit->loHarmonicsFracCurrent3 = 0.0f;
+  unit->hiHarmonicsIntCurrent3 = 0.0f;
+  unit->hiHarmonicsFracCurrent3 = 0.0f;
+  unit->spreadCurrent3 = 0.0f;
+
+  unit->loHarmonicsIntCurrent4 = 0.0f;
+  unit->loHarmonicsFracCurrent4 = 0.0f;
+  unit->hiHarmonicsIntCurrent4 = 0.0f;
+  unit->hiHarmonicsFracCurrent4 = 0.0f;
+  unit->spreadCurrent4 = 0.0f;
+
   if (INRATE(0) == calc_FullRate) unit->freqRate = 0; else unit->freqRate = 1;
 
   if (INRATE(1) == calc_FullRate) unit->loHarmonicsRate1 = 0; else unit->loHarmonicsRate1 = 1;
@@ -266,7 +290,7 @@ float *evenOddRatioIn1 = ZIN(4);
 float evenOddRatio1 = ZIN0(4);
 
 int spreadIn1 = ZIN0(5);
-float spreadCurrent1 = unit->spreadCurrent1 == 0? static_cast<float>(spreadIn1) : unit->spreadCurrent1;
+float spreadCurrent1 = unit->spreadCurrent1 == 0.0f? static_cast<float>(spreadIn1) : unit->spreadCurrent1;
 // initial value = ZIN0(5), value after running = unit->spreadCurrent
 
 float *sectionAmpIn1 = ZIN(6);
@@ -289,7 +313,7 @@ float *evenOddRatioIn2 = ZIN(10);
 float evenOddRatio2 = ZIN0(10);
 
 int spreadIn2 = ZIN0(11);
-float spreadCurrent2 = unit->spreadCurrent2 == 0? static_cast<float>(spreadIn2) : unit->spreadCurrent2;
+float spreadCurrent2 = unit->spreadCurrent2 == 0.0f? static_cast<float>(spreadIn2) : unit->spreadCurrent2;
 // initial value = ZIN0(11), value after running = unit->spreadCurrent
 
 float *sectionAmpIn2 = ZIN(12);
@@ -313,7 +337,7 @@ float *evenOddRatioIn3 = ZIN(16);
 float evenOddRatio3 = ZIN0(16);
 
 int spreadIn3 = ZIN0(17);
-float spreadCurrent3 = unit->spreadCurrent3 == 0? static_cast<float>(spreadIn3) : unit->spreadCurrent3;
+float spreadCurrent3 = unit->spreadCurrent3 == 0.0f? static_cast<float>(spreadIn3) : unit->spreadCurrent3;
 // initial value = ZIN0(17), value after running = unit->spreadCurrent
 
 float *sectionAmpIn3 = ZIN(18);
@@ -337,7 +361,7 @@ float *evenOddRatioIn4 = ZIN(22);
 float evenOddRatio4 = ZIN0(22);
 
 int spreadIn4 = ZIN0(23);
-float spreadCurrent4 = unit->spreadCurrent4 == 0? static_cast<float>(spreadIn4) : unit->spreadCurrent4;
+float spreadCurrent4 = unit->spreadCurrent4 == 0.0f? static_cast<float>(spreadIn4) : unit->spreadCurrent4;
 // initial value = ZIN0(23), value after running = unit->spreadCurrent
 
 float *sectionAmpIn4 = ZIN(24);
@@ -352,34 +376,34 @@ int spreadCompensation = ZIN0(25);
 float phaseCurrent = unit->phaseCurrent;
 
 /* Section 1 */
-float loHarmonicsIntCurrent1 = unit->loHarmonicsIntCurrent1 == 0? ceil(loHarmonics1) : unit->loHarmonicsIntCurrent1;
-float hiHarmonicsIntCurrent1 = unit->hiHarmonicsIntCurrent1 == 0? floor(hiHarmonics1) : unit->hiHarmonicsIntCurrent1;
+float loHarmonicsIntCurrent1 = unit->loHarmonicsIntCurrent1 == 0.0f? ceil(loHarmonics1) : unit->loHarmonicsIntCurrent1;
+float hiHarmonicsIntCurrent1 = unit->hiHarmonicsIntCurrent1 == 0.0f? floor(hiHarmonics1) : unit->hiHarmonicsIntCurrent1;
 // unit->... == 0? means set up initial value when starting the UGen
 
-float loHarmonicsFracCurrent1 = unit->loHarmonicsFracCurrent1 == 0? loHarmonicsIntCurrent1 - loHarmonics1 : unit->loHarmonicsFracCurrent1;
-float hiHarmonicsFracCurrent1 = unit->hiHarmonicsFracCurrent1 == 0? hiHarmonics1 - hiHarmonicsIntCurrent1 : unit->hiHarmonicsFracCurrent1;
+float loHarmonicsFracCurrent1 = unit->loHarmonicsFracCurrent1 == 0.0f? loHarmonicsIntCurrent1 - loHarmonics1 : unit->loHarmonicsFracCurrent1;
+float hiHarmonicsFracCurrent1 = unit->hiHarmonicsFracCurrent1 == 0.0f? hiHarmonics1 - hiHarmonicsIntCurrent1 : unit->hiHarmonicsFracCurrent1;
 // unit->... == 0? means set up initial value when starting the UGen
 
 /* Section 2 */
-float loHarmonicsIntCurrent2 = unit->loHarmonicsIntCurrent2 == 0? ceil(loHarmonics2) : unit->loHarmonicsIntCurrent2;
-float hiHarmonicsIntCurrent2 = unit->hiHarmonicsIntCurrent2 == 0? floor(hiHarmonics2) : unit->hiHarmonicsIntCurrent2;
+float loHarmonicsIntCurrent2 = unit->loHarmonicsIntCurrent2 == 0.0f? ceil(loHarmonics2) : unit->loHarmonicsIntCurrent2;
+float hiHarmonicsIntCurrent2 = unit->hiHarmonicsIntCurrent2 == 0.0f? floor(hiHarmonics2) : unit->hiHarmonicsIntCurrent2;
 
-float loHarmonicsFracCurrent2 = unit->loHarmonicsFracCurrent2 == 0? loHarmonicsIntCurrent2 - loHarmonics2 : unit->loHarmonicsFracCurrent2;
-float hiHarmonicsFracCurrent2 = unit->hiHarmonicsFracCurrent2 == 0? hiHarmonics2 - hiHarmonicsIntCurrent2 : unit->hiHarmonicsFracCurrent2;
+float loHarmonicsFracCurrent2 = unit->loHarmonicsFracCurrent2 == 0.0f? loHarmonicsIntCurrent2 - loHarmonics2 : unit->loHarmonicsFracCurrent2;
+float hiHarmonicsFracCurrent2 = unit->hiHarmonicsFracCurrent2 == 0.0f? hiHarmonics2 - hiHarmonicsIntCurrent2 : unit->hiHarmonicsFracCurrent2;
 
 /* Section 3 */
-float loHarmonicsIntCurrent3 = unit->loHarmonicsIntCurrent3 == 0? ceil(loHarmonics3) : unit->loHarmonicsIntCurrent3;
-float hiHarmonicsIntCurrent3 = unit->hiHarmonicsIntCurrent3 == 0? floor(hiHarmonics3) : unit->hiHarmonicsIntCurrent3;
+float loHarmonicsIntCurrent3 = unit->loHarmonicsIntCurrent3 == 0.0f? ceil(loHarmonics3) : unit->loHarmonicsIntCurrent3;
+float hiHarmonicsIntCurrent3 = unit->hiHarmonicsIntCurrent3 == 0.0f? floor(hiHarmonics3) : unit->hiHarmonicsIntCurrent3;
 
-float loHarmonicsFracCurrent3 = unit->loHarmonicsFracCurrent3 == 0? loHarmonicsIntCurrent3 - loHarmonics3 : unit->loHarmonicsFracCurrent3;
-float hiHarmonicsFracCurrent3 = unit->hiHarmonicsFracCurrent3 == 0? hiHarmonics3 - hiHarmonicsIntCurrent3 : unit->hiHarmonicsFracCurrent3;
+float loHarmonicsFracCurrent3 = unit->loHarmonicsFracCurrent3 == 0.0f? loHarmonicsIntCurrent3 - loHarmonics3 : unit->loHarmonicsFracCurrent3;
+float hiHarmonicsFracCurrent3 = unit->hiHarmonicsFracCurrent3 == 0.0f? hiHarmonics3 - hiHarmonicsIntCurrent3 : unit->hiHarmonicsFracCurrent3;
 
 /* Section 4 */
-float loHarmonicsIntCurrent4 = unit->loHarmonicsIntCurrent4 == 0? ceil(loHarmonics4) : unit->loHarmonicsIntCurrent4;
-float hiHarmonicsIntCurrent4 = unit->hiHarmonicsIntCurrent4 == 0? floor(hiHarmonics4) : unit->hiHarmonicsIntCurrent4;
+float loHarmonicsIntCurrent4 = unit->loHarmonicsIntCurrent4 == 0.0f? ceil(loHarmonics4) : unit->loHarmonicsIntCurrent4;
+float hiHarmonicsIntCurrent4 = unit->hiHarmonicsIntCurrent4 == 0.0f? floor(hiHarmonics4) : unit->hiHarmonicsIntCurrent4;
 
-float loHarmonicsFracCurrent4 = unit->loHarmonicsFracCurrent4 == 0? loHarmonicsIntCurrent4 - loHarmonics4 : unit->loHarmonicsFracCurrent4;
-float hiHarmonicsFracCurrent4 = unit->hiHarmonicsFracCurrent4 == 0? hiHarmonics4 - hiHarmonicsIntCurrent4 : unit->hiHarmonicsFracCurrent4;
+float loHarmonicsFracCurrent4 = unit->loHarmonicsFracCurrent4 == 0.0f? loHarmonicsIntCurrent4 - loHarmonics4 : unit->loHarmonicsFracCurrent4;
+float hiHarmonicsFracCurrent4 = unit->hiHarmonicsFracCurrent4 == 0.0f? hiHarmonics4 - hiHarmonicsIntCurrent4 : unit->hiHarmonicsFracCurrent4;
 
 
 LOOP(inNumSamples,
