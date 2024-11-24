@@ -1,5 +1,9 @@
 #include "SC_PlugIn.h"
-#include <tgmath.h>
+#include <cmath>
+#include <complex>  // std::complexを使用するために必要
+using std::pow;
+using std::exp;
+using std::complex;
 
 using namespace std;
 
@@ -148,7 +152,7 @@ void BLOsc4sections_Ctor(BLOsc4sections* unit)
 float ampFactor_calc (float slope, float evenOddFactor, float loHarmonicsIntCurrent, float hiHarmonicsIntCurrent, float loEvenHarmonics, float hiEvenHarmonics, float numEvenHarmonics, float fundamentalAdjust, float extraHarmonicsAdjust)
 {
   float result;
-  result = slope == 1.0f? 
+  result = (fabs(slope - 1.0f) < 1e-6f) ? 
 (hiHarmonicsIntCurrent - loHarmonicsIntCurrent + 1.0f) - (evenOddFactor * numEvenHarmonics) + fundamentalAdjust + extraHarmonicsAdjust
 :
 (pow(slope,loHarmonicsIntCurrent) - pow(slope,hiHarmonicsIntCurrent+1.0f))
@@ -198,7 +202,7 @@ complex<float> fractionalExtraHarmonics_calc (float phaseCurrent, float slope, f
 complex<float> complexSignal_calc (complex<float> baseOsc, complex<float> fractionalFundamental, complex<float> fractionalExtraHarmonics, float phaseCurrent, float slope, float evenOddFactor, float spreadCurrent, int spreadCompensation, float loHarmonicsIntCurrent, float hiHarmonicsIntCurrent, float loEvenHarmonics, float hiEvenHarmonics, float ampFactor)
 {
   complex<float> result;
-  if (slope == 1.0f && phaseCurrent == 0.0f) {
+  if (fabs(slope - 1.0f) < 1e-6f && fabs(phaseCurrent) < 1e-6f) {
     result = complex<float>(0.0f, 1.0f);
   }
   else {
@@ -541,7 +545,7 @@ if (unit->freqRate == 0) freq = ZXP(freqIn);
 omega = freq * unit->partialOmega;
 // phase increment per sample at given frequency
 
-  phaseCurrent += omega;
+  phaseCurrent += static_cast<float>(omega);
   while (phaseCurrent >= twopi_f){
     phaseCurrent -= twopi_f;
 
